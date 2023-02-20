@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% load static  %}
+
+{% block 'head' %}
+
+    <link rel="stylesheet" href="{% static 'plataforma/css/css.css' %}">
+    <link rel="stylesheet" href="{% static 'plataforma/css/plano_alimentar.css' %}">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>   
+
+
+{% endblock %}
+
+{% block 'body' %}
+
+    {% if user.is_authenticated %}
+        <nav style="background-color: #27DB8F;" class="navbar navbar-expand-lg navbar-dark">
+            <a style="font-weight: bold" class="navbar-brand" href="#">NUTRI LAB</a>
+            <a style="position: relative; left: 1700px; font-weight: bold" class="navbar-brand" href="{% url 'sair' %}">Sair</a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button> 
+        </nav>
+    {% endif %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2">
+                <a href="{% url 'pacientes' %}" class="link-lateral">
+                    <div class="card-lateral">
+                        <img src="{% static 'plataforma/img/paciente.png' %}">
+                        <br>
+                        <br>
+
+                        <h3>Gerenciar Pacientes</h3>
+                    </div>
+                    </a>
+
+                    <a href="{% url 'dados_paciente_listar' %}" class="link-lateral">
+                        <div class="card-lateral">
+                            <img src="{% static 'plataforma/img/dados_paciente.png' %}">
+                            <br>
+                            <br>
+
+                            <h3>Dados do Pacientes</h3>
+                        </div>
+                        </a>
+
+                        <a href="{% url 'plano_alimentar_listar' %}" class="link-lateral">
+                        <div class="card-lateral">
+                            <img src="{% static 'plataforma/img/plano_alimentar.png' %}">
+                            <br>
+                            <br>
+
+                            <h3>Plano alimentar</h3>
+                        </div>
+                        </a>
+
+        </div>
+
+            <div class="col-md-8">
+                {% block 'plataforma' %}
+
+
+                {% endblock %}
+            </div>
+
+        </div>
+    </div>
+{% endblock%}
