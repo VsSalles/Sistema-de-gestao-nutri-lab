@@ -2,15 +2,18 @@
 
 ## Projeto desenvolvido para praticar Python com Django. 
 
- #### ☑️ Sistema de gestão para nutricionista.
+ #### ☑️ Sistema de gestão para nutricionista, a ideia do projeto era desenvolver um sistema web para nutricionistas gerenciarem seus pacientes.
  
 > Status: **completo** ⚠️
 <hr>
 
 ## Requisitos/Funcionalidades do projeto
-- Cadastro de nutricionista/usuarios no banco de dados ✅
-- Autenticação de usuarios via e-mail
-- Cadastro de pacientes, refeições opções para refeições
+- Cadastro de nutricionistas/usuarios no banco de dados ✅
+- Autenticação de usuarios via e-mail ✅
+- Cadastro de pacientes, plano alimentar com as refeições e opções para refeições ✅
+- exportação do plano alimentar em pdf ✅
+- Grafico com evolução do peso ✅
+
 
 ## Tecnologias/Habilidades 
 <table> 
@@ -44,14 +47,14 @@
     </td>
   </tr>
 </table>
-
- #### ☑️ Cadastro.
+<hr>
+☑️ Cadastro.
 <img src="https://user-images.githubusercontent.com/94395283/220215600-20b85a90-89c1-4430-8a64-7af99ef71171.png">
- #### ☑️ Login.
+☑️ Login.
 <img src="https://user-images.githubusercontent.com/94395283/220216647-0ba41bb4-bf2d-45f3-b5da-79959796aaf6.png">
- #### ☑️ Gerencia de Pacientes.
+☑️ Gerencia de Pacientes.
  <img src="https://user-images.githubusercontent.com/94395283/220216966-ac954a8c-0191-43b1-b7f7-b9119b651c31.png">
-  #### ☑️ Dados dos Pacientes.
+☑️ Dados dos Pacientes.
  <img src="https://user-images.githubusercontent.com/94395283/220217024-180b263e-e1c9-4259-a2c1-b97b91afdf52.png">
- #### ☑️ Adicionar Refeições.
+☑️ Adicionar Refeições.
  <img src="https://user-images.githubusercontent.com/94395283/220217181-0196742f-748b-4889-b4a0-3845bcc605d4.png">
