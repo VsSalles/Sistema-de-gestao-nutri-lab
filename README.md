@@ -4,7 +4,7 @@
 
  #### ☑️ Sistema de gestão para nutricionista, a ideia do projeto era desenvolver um sistema web para nutricionistas gerenciarem seus pacientes.
  
-> Status: **completo** ⚠️
+> Status: **Em desenvolvimento** ⚠️
 <hr>
 
 ## Requisitos/Funcionalidades do projeto
@@ -13,6 +13,14 @@
 - Cadastro de pacientes, plano alimentar com as refeições e opções para refeições ✅
 - exportação do plano alimentar em pdf ✅
 - Grafico com evolução do peso ✅
+## Funcionalidades novas desenvolividas/em desenvolvimento
+- Home com dashboard ✅
+- Api em django ninja ✅
+- Consultas(criação de consultas/cancelamento/pedidos/edição/vizualização/geração de PDF/geração de comprovante de horas) (Em andamento)
+- Filtros em gerenciar pacientes/consultas/plano alimentar ✅
+- Gerador de dados automaticos para teste do sistema ✅
+- Autenticação, funcionalidade para recuperar/trocar a senha, funcionalidade de logar no sistema com usuario anonimo para teste ✅
+- Banco de dados, Migração para do Sqlite para o Mysql (Em andamento)
 
 
 ## Tecnologias/Habilidades 
@@ -35,6 +43,9 @@
    </td>
     <td>
    <h3>Django</h3>
+   </td>
+ <td>
+   <h3>Django Ninja</h3>
    </td>
     <td>
    <h3>SQLite</h3>
