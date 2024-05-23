@@ -1,0 +1,116 @@
+
+.btn-custom-secondary{
+    background-color: #32b92d;
+    border: none;
+    box-shadow: 2px 2px 5px 1px rgb(108, 108, 108);
+    color: white;
+    font-size: 20px;
+    padding: 5px 20px 5px 20px;
+    border-radius: 10px;
+
+}
+
+.font-vinho{
+    text-align: center;
+}
+
+.span-bold{
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.span-bold2{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.badge-lg{
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.wrapper {
+    margin-top: 3%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.box {
+    padding:20px;
+    width: 65vw;
+    background: rgb(238, 238, 238);
+    box-shadow: 4px 4px 10px rgba(0,0,0,.3);
+}
+
+.width80{
+    width: 100vw; 
+ }
+ 
+ .tabela{
+     width: 100%;
+     margin-top: 20px;
+ }
+ 
+ .tabela-linha{
+     background-color: #e8e7e7;
+ }
+ .btn-custom-dark{
+    background-color: #021502;
+    border: none;
+    box-shadow: 2px 2px 5px 1px rgb(108, 108, 108);
+    color: white;
+    font-size: 20px;
+    padding: 5px 20px 5px 20px;
+    border-radius: 10px;
+    
+}
+.btn-custom-dark:hover{
+    text-decoration: none;
+    color: white;
+}
+
+.btn-custom-success{
+    background-color: #26c126;
+    border: none;
+    box-shadow: 2px 2px 5px 1px rgb(108, 108, 108);
+    color: white;
+    font-size: 20px;
+    padding: 5px 20px 5px 20px;
+    border-radius: 10px;
+}
+
+.btn-custom-success:hover{
+    text-decoration: none;
+    color: white;
+}
+
+.btn-custom-danger{
+    background-color: #f6202a;
+    border: none;
+    box-shadow: 2px 2px 5px 1px rgb(108, 108, 108);
+    color: white;
+    font-size: 20px;
+    padding: 5px 20px 5px 20px;
+    border-radius: 10px;
+}
+
+.btn-custom-danger:hover{
+    text-decoration: none;
+    color: white;
+}
+
+.btn-custom-info{
+    background-color: #1956d0;
+    border: none;
+    box-shadow: 2px 2px 5px 1px rgb(108, 108, 108);
+    color: white;
+    font-size: 20px;
+    padding: 5px 20px 5px 20px;
+    border-radius: 10px;
+}
+
+.btn-custom-info:hover{
+    text-decoration: none;
+    color: white;
+}

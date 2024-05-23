@@ -45,10 +45,12 @@
                         <input class="form-control input-form" name="senha" type="password" placeholder="Digite sua senha...">
                         <br>
                         <button class="btn-first">Logar</button>
+                        <h3 style="font-weight: bold">Esqueceu sua senha?&nbsp <a  href="{% url 'password_reset' %}" class="btn btn-outline-warning btn-lg">Recuperar</a> </h3>
+
 
                     </form>
-
                     <h3 style="position: absolute; bottom: 65px; font-weight: bold">Não tem uma conta ?&nbsp <a  href="{% url 'cadastro' %}" class="btn btn-outline-success btn-lg">Registre-se</a> </h3>
+                    <h3 style="position: absolute; bottom: 140px; font-weight: bold">Entrar como recrutador ou Anonimo <a  href="{% url 'recrutador' %}" class="btn btn-outline-primary btn-lg">Testar</a> </h3>
                 </div>
 
             </div>

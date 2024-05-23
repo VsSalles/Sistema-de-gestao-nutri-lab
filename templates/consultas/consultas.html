@@ -1,0 +1,88 @@
+{% extends 'base_plataforma.html' %}
+{% load static %}
+
+
+{% block 'plataforma' %}
+
+    {% if messages %}
+        <br>
+        {% for message in messages %}
+            <div class="alert {{message.tags}}">
+                {{message}}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <p id="msg"></p>
+    <br>
+    <br>
+    <br>
+    <div class="card-deck" style="margin-left: 90px;">
+        <div class="card">
+          <img class="card-img-top" src="{% static 'consultas/img/consulta2.png' %}" alt="Card image cap">
+          <div class="card-body">
+            <h4 class="card-title">Nova Consulta</h4>
+            <p class="card-text">Agendar nova consulta</p>
+            <button type="button" data-target="#modal1" data-toggle="modal" class="btn btn-success">Agendar</button>
+          </div>
+        </div>
+        <div class="card">
+          <img class="card-img-top" src="{% static 'consultas/img/consulta.png' %}" alt="Card image cap">
+          <div class="card-body">
+            <h4 class="card-title">Historico de Consultas/Consultas agendadas/Cancelamento/Comprovante</h4>
+            <p class="card-text">Veja sua agenda, veja suas consultas realizadas, gere comprovantes e cancele consultas</p>
+            <a href="{% url 'agenda' %}"  class="btn btn-info">Consultas</a>
+          </div>
+        </div>
+      </div>
+
+
+      <!--modal nova consulta-->
+      <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="modal1">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Nova consulta</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+                    <form action="{% url 'home' %}" method="post">{% csrf_token%}
+                        <div class="form-group">       
+                          <label>Paciente</label>                   
+                          <select class="form-control" id="paciente_id" name="paciente_id">
+                            {% for paciente in pacientes %}
+                            <option value="{{paciente.id}}">{{paciente.nome}}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                    
+                        <div class="form-group">
+                            <label>Data e horario</label>
+                            <br>
+                            <input id="data_horario" class="form-control" type="datetime-local" name="data_horario">
+                            <label>Local</label>
+                            <br>
+                            <input id="local" type="text" name="local" class="form-control" value="São Paulo, Toninho Cerezo 820, andar 8">
+                            <br>
+                            <input type="submit" class="btn btn-success" value="Agendar"></button>
+                        </div>
+                      </form>
+
+                      <script src="{% static 'consultas/js/script.js' %}"></script>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+     <!--endmodal-->
+
+
+
+
+
+{% endblock %}

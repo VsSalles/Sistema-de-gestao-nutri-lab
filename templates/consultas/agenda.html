@@ -1,0 +1,147 @@
+{% extends 'base_plataforma.html' %}
+
+{% load static %}
+
+{% block 'head' %}
+<link rel="stylesheet" href="{% static 'consultas/css/listar.css'%}">
+<link rel="stylesheet" href="{% static 'plataforma/css/css.css'%}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+{% endblock %}
+
+{% block 'plataforma' %}
+
+    {% if messages %}
+        <br>
+        {% for message in messages %}
+            <div class="alert {{message.tags}}">
+                {{message}}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <br>
+    <br>
+
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-md">
+            <div class="wrapper">
+                <div class="box width80">
+                    <h3 class="font-vinho">Consultas</h3>
+                    <hr>
+                    <form method="GET" action="{% url 'agenda_filter' %}">
+                        <div class="row">
+                          
+                            <div class="col-md-2">
+                                <span>Data/Hora</span>
+                                <input type="date" placeholder="data"  id="data" name="data" class="form-control">
+                            </div>
+
+                            <div class="col-md-3">
+                                <span>Paciente</span>
+                                <select class="form-select" id="paciente" name="paciente">
+                                        {% for paciente in pacientes %}
+                                        <option value="{{paciente.id}}">{{paciente.nome}}</option>
+                                        {% endfor %}
+                                        <option selected value="T">Todos</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3">
+                                <span>Status</span>
+                              <select class="form-select" id="stauts" name="status">
+                                          <option value="F">Finalizada</option>
+                                          <option value="A">Agendada</option>
+                                          <option value="C">Cancelada</option>
+                                          <option selected value="T">Todos</option>
+                                      
+                              </select>
+                          </div>
+
+                            <div class="col-md-2">
+                                <span>Pedido</span>
+                              <input type="text" class="form-control" id="codigo" name="codigo" placeholder="NUTRI(...):..">
+                          </div>
+
+
+                            <div class="col-md-1">
+                                <input type="submit" class="btn-custom-secondary" value="FILTRAR">
+                            </div>
+                        </div>
+                    </form>
+
+                     <table class="tabela" cellpadding="20">
+                        <tr>
+                            <th>Nºdo Pedido</th>
+                            <th>Data</th>
+                            <th>Paciente</th>
+                            <th>Status</th>
+                            <th>Finalizar/Detalhes</th>
+                            <th>Cancelamento</th>
+                        </tr>
+                            {% for consulta in consultas %}
+                            <tr class="tabela-linha">
+                                <td width="20%">
+                                    {{consulta.codigo}}
+                                </td>
+                                <td>
+                                    {{consulta.data_horario}}
+                                </td>
+                                <td>
+                                    {{consulta.paciente}}
+                                </td>
+                                <td>    
+                                  {% if consulta.status == 'A' %}
+                                        <span class="badge text-bg-warning">Agendado</span>
+                                  {% elif consulta.status == 'C' %}
+                                        <span class="badge text-bg-danger">Cancelada</span>
+                                  {% else %}
+                                        <span class="badge text-bg-success">Finalizada</span>
+                                  {% endif %}
+                                </td>
+
+                                <td>
+                                  {% if consulta.status == 'A' %}
+                                  <a href="{% url 'realizar' consulta.codigo %}" class="btn btn-info">Finalizar</a>
+                                  {% elif consulta.status == 'F' %}
+                                  <a href="{% url 'detalhes' consulta.codigo %}" class="btn btn-light">Detalhes</a>
+                                  {% else %}
+                                  <a href="{% url 'motivo' consulta.codigo%}" class="btn btn-warning">Motivo</a>
+                                  {% endif %}
+                                </td>
+                                
+                                <td>
+                                  {% if consulta.status == 'C' or consulta.status == 'F' %}
+                                  <button class="btn btn-danger" disabled>Cancelar</button>
+                                  {% else %}
+                                    <a href="{% url 'cancelar' consulta.codigo%}" class="btn btn-danger">Cancelar</a>
+
+                                  {% endif %}
+                                </td>
+
+                                
+                                
+
+                              </tr>
+                             
+                            
+                            {% endfor %}
+                    
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+</div>
+
+
+
+
+{% endblock %}
+

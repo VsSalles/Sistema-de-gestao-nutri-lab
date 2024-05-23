@@ -4,10 +4,13 @@ from . utils import password_is_valid, email_html
 from django.contrib.auth.models import User
 from django.contrib import messages, auth
 from django.conf import settings
+from plataforma.models import Pacientes
 import os
 from . models import Ativacao
 from hashlib import sha256
-
+from django.conf import settings
+from random import randint
+from plataforma.utils import Geradora
 
 def cadastro(request):
     if request.user.is_authenticated:
@@ -26,6 +29,10 @@ def cadastro(request):
         
         if User.objects.filter(username=usuario).exists():
             messages.add_message(request, messages.INFO, 'ja existe alguem cadastrado com esse nome!')
+            return redirect('cadastro')
+        
+        if User.objects.filter(email=email).exists():
+            messages.add_message(request, messages.INFO, 'ja existe alguem cadastrado com esse e-mail!')
             return redirect('cadastro')
         
         if not password_is_valid(request, senha, confirmar_senha):
@@ -49,7 +56,6 @@ def cadastro(request):
                 messages.add_message(request, messages.ERROR, 'Erro interno do sistema!')
                 return redirect('cadastro')
             
-
 def login(request):
     if request.user.is_authenticated:
         return redirect('/pacientes/')
@@ -70,9 +76,18 @@ def login(request):
             return redirect('/pacientes/')
         
 def sair(request):
+    user_logado = User.objects.filter(id=request.user.id).first()
+
+    if user_logado.username.startswith('recrutador-me-recruta'):
+        pacientes = Pacientes.objects.filter(nutri=user_logado)
+        if len(pacientes) > 0:
+            for x in pacientes:
+                x.delete()
+
+        user_logado.delete()
+
     auth.logout(request)
     return redirect('/auth/login')
-
 
 def ativar_conta(request, token):
     token = get_object_or_404(Ativacao, token=token)
@@ -86,3 +101,27 @@ def ativar_conta(request, token):
     token.save()
     messages.add_message(request, messages.SUCCESS, 'Conta ativa com sucesso')
     return redirect('/auth/login')
+
+def recrutador(request):
+    id = randint(20393, 39320329)
+    nome = 'recrutador-' 
+    sobrenome = 'me-recruta-'
+    nome_completo = nome + sobrenome + str(id)
+    senha = settings.SENHA
+
+    user = User.objects.create_user(username=nome_completo,password=senha)
+    email = Geradora(user.id).gera_email(nome, sobrenome)
+    user.email = email
+    user.last_name = 'teste'
+    user.save()
+    
+    usuario = auth.authenticate(request, username=user, password=senha)
+
+    if usuario:
+        auth.login(request, usuario)
+        return redirect('/')
+    else:
+        print(senha)
+        print(user)
+        print(email)
+        return redirect('/auth/login/')

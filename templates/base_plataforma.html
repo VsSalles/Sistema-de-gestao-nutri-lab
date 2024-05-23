@@ -16,7 +16,7 @@
 
     {% if user.is_authenticated %}
         <nav style="background-color: #27DB8F;" class="navbar navbar-expand-lg navbar-dark">
-            <a style="font-weight: bold" class="navbar-brand" href="#">NUTRI LAB</a>
+            <a style="font-weight: bold" class="navbar-brand" href="{% url 'dashboard' %}">NUTRI LAB</a>
             <a style="position: relative; left: 1700px; font-weight: bold" class="navbar-brand" href="{% url 'sair' %}">Sair</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,6 +28,17 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2">
+
+                <a href="{% url 'dashboard' %}" class="link-lateral">
+                    <div class="card-lateral">
+                        <img src="{% static 'plataforma/img/paciente.png' %}">
+                        <br>
+                        <br>
+
+                        <h3>Home</h3>
+                    </div>
+                    </a>
+
                 <a href="{% url 'pacientes' %}" class="link-lateral">
                     <div class="card-lateral">
                         <img src="{% static 'plataforma/img/paciente.png' %}">
@@ -38,16 +49,6 @@
                     </div>
                     </a>
 
-                    <a href="{% url 'dados_paciente_listar' %}" class="link-lateral">
-                        <div class="card-lateral">
-                            <img src="{% static 'plataforma/img/dados_paciente.png' %}">
-                            <br>
-                            <br>
-
-                            <h3>Dados do Pacientes</h3>
-                        </div>
-                        </a>
-
                         <a href="{% url 'plano_alimentar_listar' %}" class="link-lateral">
                         <div class="card-lateral">
                             <img src="{% static 'plataforma/img/plano_alimentar.png' %}">
@@ -57,6 +58,26 @@
                             <h3>Plano alimentar</h3>
                         </div>
                         </a>
+
+                        <a href="{% url 'home' %}" class="link-lateral">
+                            <div class="card-lateral">
+                                <img src="{% static 'plataforma/img/dados_paciente.png' %}">
+                                <br>
+                                <br>
+    
+                                <h3>Consultas</h3>
+                            </div>
+                            </a>
+
+                            <a href="{% url 'gerar' %}" class="link-lateral">
+                                <div class="card-lateral">
+                                    <img src="{% static 'plataforma/img/Consulta.png' %}">
+                                    <br>
+                                    <br>
+        
+                                    <h3>Gerar dados</h3>
+                                </div>
+                                </a>
 
         </div>
 

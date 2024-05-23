@@ -40,9 +40,17 @@
         + Nova refeição
     </button>
 
+    <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal">
+        Editar refeição
+    </button> <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal">
+        Excluir refeição
+    </button>
+
     <button onclick="downloadPDF()" type="button" class="btn btn-outline-primary">
         Exportar refeição
     </button>
+
+    
     <br>
     <br>
 
@@ -162,7 +170,11 @@
 
                         <div id="form-opcao" style="display: none;">
                             <form action="{% url 'opcao' paciente.id %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
-
+                                {% if not refeicao %}
+                                <button disabled class="btn btn-warning">Para cadastrar opções, você precisa cadastrar refeições" </button>
+                                <br>
+                                <br>
+                                {% endif %}
                                 <label for="validationServerUsername">Selecione a refeição</label>
                                 <div class="input-group">
                                     <select class="form-control" name="refeicao">

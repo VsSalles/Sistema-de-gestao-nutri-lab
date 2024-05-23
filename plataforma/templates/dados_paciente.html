@@ -33,8 +33,23 @@
 
 
     <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal">
-        Adicionar dados do paciente
+        Adicionar dados de saude do paciente
     </button>
+
+    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#modal4">Editar dados de saude do paciente</button>
+
+    <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal1">
+        Editar dados cadastrais do paciente
+    </button>
+
+    <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal2">
+        Excluir paciente
+    </button>
+
+    <a href="http://127.0.0.1:8000/consultas/?user={{paciente.id}}"  class="btn btn-outline-warning" data-target="#modal3">
+        Marcar consulta 
+    </a>
+
     <br>
     <br>
     <table class="table table-striped">
@@ -44,6 +59,9 @@
             <th scope="col">Altura</th>
             <th scope="col">% gordura</th>
             <th scope="col">% músculo</th>
+            <th scope="col">Taxa de metabolismo Basal</th>
+            <th>Data</th>
+            <th>registro</th>
             </tr>
         </thead>
         <tbody>
@@ -53,6 +71,9 @@
                     <td>{{dado.altura}}</td>
                     <td>{{dado.percentual_gordura}}</td>
                     <td>{{dado.percentual_musculo}}</td>
+                    <td>{{dado.taxa_metabolismo_basal}}</td>
+                    <td>{{dado.data}}</td>
+                    <td>{{dado.id}}</td>
             </tr>
                 {% endfor %}
 
@@ -65,6 +86,7 @@
     
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'plataforma/js/script.js'%}"></script>
 
     <script>
     
@@ -103,14 +125,7 @@
     </script>
 
 
-
-
-
-
-
-
-
-
+  <!--modal adicionar-->
     <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -247,5 +262,251 @@
             </div>
         </div>
     </div>
-        
+    <!--end modal add-->
+       
+    <!--modal editar dados cadastrais-->
+    <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title titulo" id="exampleModalLabel">Dados cadastrais</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                
+                <div class="modal-body">
+                    <form action="{% url 'pacientes_editar' paciente.id %}" method="POST">{% csrf_token %}
+    
+    
+                        <div class="row">
+    
+                            <div class="col-md-3">
+                                <img src="{% static 'plataforma/img/perfil2.png' %}">
+                            </div>
+    
+                            <div class="col-md-9">
+                                <label>Nome:</label>
+                                <input type="text" value="{{paciente.nome}}" class="form-control" name="nome">
+                                <label>Sobrenome:</label>
+                                <input type="text" value="{{paciente.sobrenome}}" class="form-control" name="sobrenome">
+                            </div>
+    
+                        </div>
+    
+                        <br>
+                        <label>Sexo:</label>
+                        <select name="sexo" class="form-control">
+                            <option value="M">Masculino</option>
+                            <option value="F">Feminino</option>
+                        </select>
+    
+                        <br>
+    
+                        <label>Idade:</label>
+                        <input type="number" value="{{paciente.idade}}" class="form-control" name="idade">
+                        
+                        <br>
+                        
+                        <label>E-mail:</label>
+                        <input type="email" value="{{paciente.email}}" class="form-control" name="email">   
+    
+                        <br>
+                        
+                        <label>Telefone:</label>
+                        <input type="text" value="{{paciente.telefone}}" class="form-control" name="telefone">
+                        <br>
+                        <input type="submit" class="btn btn-success btn-lg" value="Editar">
+                    
+                    </form>
+    
+    
+                </div>
+            
+            </div>
+        </div>
+        </div>
+    <!--end modal editar-->
+
+     <!--modal excluir-->
+     <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title titulo" id="exampleModalLabel">Excluir</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                
+                <div class="modal-body">
+                    <form action="{% url 'pacientes_excluir' paciente.id %}" method="POST">{% csrf_token %}
+
+                            <div class="col-md-9">
+                                <label>Tem certeza que deseja excluir {{paciente.nome}}</label>
+                            </div>
+                        <br>
+                        <br>
+                        <input type="submit" class="btn btn-success btn-lg" value="Sim">
+                        <a href="{% url 'dados_paciente' paciente.id %} "class="btn btn-success btn-lg">Não</a>
+
+                    
+                    </form>
+    
+    
+                </div>
+            
+            </div>
+        </div>
+        </div>
+    <!--end modal excluir-->
+
+    <!--modal editar dados de saude-->
+    <div class="modal fade" id="modal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                
+                <div class="modal-body">
+                    <form action="{% url 'dados_paciente' paciente.id %}" method="POST">{% csrf_token %}
+                        <h4 class="titulo">Dados do paciente</h4>
+                        <div class="form-row">
+                            <div class="col-md">
+                                <input type="hidden" id="paciente" value="{{paciente.id}}">
+                                <label>Registro</label>
+                                <select class="form-control" onclick="edita_dados_paciente()" id="registro" name="registro">
+                                    {% for dado in dados_paciente %}
+                                    <option value="{{dado.id}}">{{dado.id}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class='col-md'>
+                            
+                                    <label for="validationServerUsername">Peso</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="peso" name="peso">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroupPrepend3">Kg</span>
+                                        </div>
+                                    </div>
+                                                            
+                            </div>
+
+                            <div class='col-md'>
+                            
+                                    <label for="validationServerUsername">Altura</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" placeholder="--" id="altura" name="altura">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroupPrepend3">cm</span>
+                                        </div>
+                                    </div>
+                                                            
+                            </div>
+
+                            
+                        </div>
+                        <br>
+                        <div class="form-row">
+                            <div class='col-md'>
+                            
+                                    <label for="validationServerUsername">Percentual de gordura</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" placeholder="--" id="gordura" name="gordura">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroupPrepend3">%</span>
+                                        </div>
+                                    </div>
+                                                            
+                            </div>
+
+                            <div class='col-md'>
+                            
+                                    <label for="validationServerUsername">Percentual de músculo</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" placeholder="--" id="musculo" name="musculo">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroupPrepend3">%</span>
+                                        </div>
+                                    </div>
+                                                            
+                            </div>
+
+                            
+                        </div>
+                        <br>
+                        <h4 class="titulo">Dados laboratoriais</h4>
+                        <div class="form-row">
+                            <div class='col-md'>
+                            
+                                    <label for="validationServerUsername">Colesterol HDL</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" placeholder="--" id="hdl" name="hdl">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroupPrepend3">mg/dL</span>
+                                        </div>
+                                    </div>
+                                                            
+                            </div>
+
+                            <div class='col-md'>
+                            
+                                    <label for="validationServerUsername">Colesterol LDL</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control"  placeholder="--" id="ldl" name="ldl">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroupPrepend3">mg/dL</span>
+                                        </div>
+                                    </div>
+                                                            
+                            </div>
+
+                            
+                        </div>
+                        <br>
+                        <div class="form-row">
+                            <div class='col-md'>
+                            
+                                    <label for="validationServerUsername">Colesterol total</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" placeholder="--" id="ctotal" name="ctotal">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroupPrepend3">mg/dL</span>
+                                        </div>
+                                    </div>
+                                                            
+                            </div>
+
+                            <div class='col-md'>
+                            
+                                    <label for="validationServerUsername">Triglicerídios</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" placeholder="--" id="triglicerídios" name="triglicerídios">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroupPrepend3">mg/dL</span>
+                                        </div>
+                                    </div>
+                                                            
+                            </div>
+
+                            
+                        </div>
+
+                        <br>
+
+                        <input type="submit" value="Atualizar" class="btn btn-info">
+
+                    </form>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+    <!--end modal-->
 {% endblock%}

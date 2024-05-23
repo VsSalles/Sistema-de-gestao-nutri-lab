@@ -1,0 +1,105 @@
+{% extends 'base_plataforma.html' %}
+{% load static %}
+ 
+{% block 'head' %}
+
+<link rel="stylesheet" href="{% static 'plataforma/css/css.css' %}">
+{% endblock%}
+
+
+{% block 'plataforma' %}
+<div class="container">
+    <br>
+    <input type="hidden" id="user" value="{{user.id}}">
+    <div class="row">
+
+        <div  class="col-md informacoes_basicas">
+            
+            <h1> <img width="70px" src="{% static 'plataforma/img/paciente_dash.png'%}" alt=""><span style="margin-left: 20px;">{{qtd_pacientes}}</span></h1> 
+            
+        </div>
+
+        <div class="col-md informacoes_basicas">
+                <h1> <img width="70px" src="{% static 'plataforma/img/consulta_dash.png'%}" alt=""><span style="margin-left: 20px;">{{qtd_consultas}}</span></h1> 
+
+        </div>
+
+       
+    </div>
+
+
+    <div class="row">
+        
+        <div class="col-md">
+            <br>
+            <hr>
+            <canvas id="pacientes" width="250" height="200"></canvas>
+        </div>
+        
+        <div class="col-md">
+            <br>
+            <hr>
+            <canvas id="consultas" width="300" height="200"></canvas>
+        </div>
+
+    </div>
+
+    <div class="row">
+        
+        <div class="col-md">
+            <br>
+
+            <hr>
+            <canvas id="pacientes_objetivos" width="250" height="200"></canvas>
+        </div>
+        
+        <div class="col-md">
+            <br>
+            <hr>
+            <canvas id="consultas_mes" width="250" height="200"></canvas>
+        </div>
+
+    </div>
+
+    <div class="row">
+        
+        <div class="col-md">
+            <br>
+
+            <hr>
+            <canvas id="pacientes_atv" width="250" height="200"></canvas>
+        </div>
+        
+        <div class="col-md">
+            <br>
+            <hr>
+            <canvas id="consultas_canc" width="250" height="200"></canvas>
+        </div>
+
+    </div>
+
+
+</div>
+<br>
+<footer class="container">
+    <br>
+    <br>
+
+  </footer>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'plataforma/js/script.js' %}"></script>
+
+
+<script>
+    window.onload = function(e){
+    renderiza_pacientes('http://127.0.0.1:8000/api/plataforma/relatorio_pacientes/')
+    renderiza_consultas('http://127.0.0.1:8000/api/plataforma/relatorio_consultas_status/')
+    renderiza_consultas_meses('http://127.0.0.1:8000/api/plataforma/relatorio_consultas/')
+    renderiza_pacientes_objetivo('http://127.0.0.1:8000/api/plataforma/relatorio_pacientes_objetivos/')
+    renderiza_pacientes_atividade('http://127.0.0.1:8000/api/plataforma/relatorio_pacientes_atv/')
+    renderiza_consultas_canceladas('http://127.0.0.1:8000/api/plataforma/relatorio_consultas_canceladas/')
+    
+    }
+</script>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprovante consulta:{{consulta.codigo}}</title>
+</head>
+<body>
+
+    Oi {{consulta.paciente|title}} Segue o link do seu comprovante de comparecimento a consulta:{{consulta.codigo}} realizada com {{consulta.nutri|title}}.
+
+    Link:<a href="http://127.0.0.1:8000/media/comprovantes/{{token}}.pdf">Comprovante</a>
+   
+    
+</body>
+</html>

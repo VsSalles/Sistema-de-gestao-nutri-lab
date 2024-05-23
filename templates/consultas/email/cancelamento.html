@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta {{consulta.codigo}} Cancelada</title>
+</head>
+<body>
+
+    Oi {{paciente}} sentimos muito em informar mais sua consulta com a doutor(a) {{consulta.nutri}}, data/hora:{{consulta.data_horario}} 
+    no endereço:{{consulta.local}} foi Cancelada por uma questão: 
+    {% if cancelamento.motivo == 'E' %} 
+        Emergencial do doutor(a).
+    {% elif cancelamento.motivo == 'I' %}
+        Imprevisto
+    {%else%}
+        Outro  {{ - cancelamento.detalhes}}
+    {% endif %}
+
+
+    
+</body>
+</html>

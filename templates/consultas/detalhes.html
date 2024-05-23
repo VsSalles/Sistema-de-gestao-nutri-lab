@@ -1,0 +1,285 @@
+{% extends 'base_plataforma.html' %}
+
+{% load static %}
+
+{% block 'head' %}
+<link rel="stylesheet" href="{% static 'consultas/css/listar.css'%}">
+<link rel="stylesheet" href="{% static 'plataforma/css/css.css'%}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>   
+
+
+
+{% endblock %}
+
+{% block 'plataforma' %}
+
+    {% if messages %}
+        <br>
+        {% for message in messages %}
+            <div class="alert {{message.tags}}">
+                {{message}}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <br>
+    <br>
+  <divc class="pdff">
+    <div class="card" style="margin-left: 130px;">
+        <h5 class="card-header" style="text-align: center;">{{paciente|title}} {{paciente.sobrenome}}</h5>
+        <div class="card-body">
+          <h5 class="card-title" id="codigo">{{consulta.codigo}}</h5>
+          <hr style="background-color: black;">
+          <div class="box" style="width: 1050px">
+          <p class="card-text" style="text-align: center;"> <strong>Dados Pessoais</strong></p>
+          <hr>
+          <table class="tabela" cellpadding="20">
+            <tr>
+                <th>Nome</th>
+                <th>Sobrenome</th>
+                <th>Sexo</th>
+                <th>Idade</th>
+                <th>E-mail</th>
+                <th>Telefone</th>
+            </tr>
+                <tr class="tabela-linha">
+                    <td width="20%">
+                        {{paciente|title}}
+                    </td>
+
+                    <td>
+                        {{paciente.sobrenome|title}}
+                    </td>
+
+                    <td>
+                        {% if paciente.sexo == 'M'%}
+                            Masculino
+                        {% else %}
+                            Feminino
+                        {% endif %}
+                    </td>
+
+                    <td>    
+                      {{paciente.idade}}
+                    </td>
+
+                    <td>
+                      {{paciente.email}}
+                    </td>
+                    
+                    <td>
+                      {{paciente.telefone}}
+                    </td>
+                    
+
+                  </tr>
+                        
+        </table>
+          </div>
+          <br>
+          <div class="box" style="width: 1050px">
+            <p class="card-text" style="text-align: center;"> <strong>Dados do Paciente</strong></p>
+            <hr>
+            <table class="tabela" cellpadding="20">
+              <tr>
+                  <th>Peso</th>
+                  <th>Altura</th>
+                  <th>Percentual de Gordura</th>
+                  <th>Percentual de Musculo</th>
+                  <th>Colesterol Total</th>
+              </tr>
+                  <tr class="tabela-linha">
+                      <td width="20%">
+                          {{dados_paciente.peso}}kg
+                      </td>
+  
+                      <td>
+                          {{dados_paciente.altura}}cm
+                      </td>
+  
+                      <td>
+                          {{dados_paciente.percentual_gordura}}%
+                      </td>
+  
+                      <td>    
+                        {{dados_paciente.percentual_musculo}}%
+                      </td>
+  
+                      <td>
+                        {{dados_paciente.colesterol_total}}%
+                      </td>
+                      
+  
+                    </tr>
+                          
+          </table>
+            </div>
+          <br>
+          <div class="box" style="width: 1050px">
+            <p class="card-text" style="text-align: center;"> <strong>Consulta</strong></p>
+            <hr>
+            <table class="tabela" cellpadding="20">
+              <tr>
+                  <th>Data/Hora</th>
+                  <th>Local</th>
+                  <th>Comprovante de horas</th>
+                  <th>Numero da Solicitação</th>
+              </tr>
+                  <tr class="tabela-linha">
+                      <td width="20%">
+                          {{consulta.data_horario}}
+                      </td>
+  
+                      <td>
+                          {{consulta.local}}
+                      </td>
+  
+                      <td>
+                            <a href="{% url 'comprovante' consulta.codigo %}" class="btn-custom-info">Emitir</a>
+                      </td>
+  
+                      <td>    
+                        {{consulta.codigo}}
+                      </td>
+                      
+  
+                    </tr>
+                          
+          </table>
+            </div>
+          <br>
+          <div class="box" style="width: 1050px">
+            <p class="card-text" style="text-align: center;"> <strong>Dados da Consulta</strong></p>
+            <hr>
+            <table class="tabela" cellpadding="20">
+              <tr>
+                  <th>Objetivo</th>
+                  <th>Horario Fome</th>
+                  <th>Horario Sono</th>
+                  <th>Tabagismo</th>
+                  {% if dados_consulta.tabagismo == 'S' %}
+                    <th>Frequência Tabagismo</th>
+                  {% endif %}
+                  <th>Atividade Fisica</th>
+                  {% if dados_consulta.atividade_fisica == 'S' %}
+                    <th>Atividade</th>
+                    <th>Horario Atividade</th>
+                    <th>Pratica quantos dias na semana</th>
+                  {% endif %}
+
+              </tr>
+                  <tr class="tabela-linha">
+                      <td>
+                        {% if dados_consulta.objetivo == 'S'%}
+                            Vida Saudavel
+                        {% elif dados_consulta.objetivo == 'D' %}
+                            Definição
+                        {% else %}
+                            Massa Muscular
+                        {% endif %}
+                      </td>
+  
+                      <td>    
+                        {{dados_consulta.horario_fome}}
+                      </td>
+                      
+                      <td>
+                        {{dados_consulta.horas_sono}}
+                      </td>
+
+                      <td>
+                        {% if dados_consulta.tabagismo == 'S' %}
+                            Sim
+                        {% else %}
+                            Não
+                        {% endif %}
+                      </td>
+
+                    {% if dados_consulta.tabagismo == 'S' %}
+
+                      {% if dados_consulta.frequencia_tabagismo == '1M' %}
+                        <td>1 maço/dia</td>
+                        {% elif dados_consulta.frequencia_tabagismo == '2M' %}
+                        <td>2 maços/dia</td>
+                        {% elif dados_consulta.frequencia_tabagismo == 'M+' %}
+                        <td>+2 maços/dia</td>
+                        {% else %}
+                        <td>- de 1 maço/dia</td>
+                      {% endif %}
+                    {% endif %}
+                      
+                    <td>
+                        {% if dados_consulta.atividade_fisica == 'S' %}
+                            Sim
+                        {% else %}
+                            Não
+                        {% endif %}
+                    </td>
+
+                  {% if dados_consulta.atividade_fisica == 'S' %}
+                    
+                      {% if dados_consulta.atividade == 'A' %}
+                        <td>Academia</td>
+                      {% elif dados_consulta.atividade == 'L' %}
+                        <td>Luta</td>
+                      {% elif dados_consulta.atividade == 'N' %}
+                        <td>Natação</td> 
+                      {% elif dados_consulta.atividade == 'C' %}
+                        <td>Corrida</td>
+                      {% else %}
+                        <td>Outro</td>
+                    {% endif %}
+                  {% endif %}
+
+
+                  {% if dados_consulta.atividade_fisica == 'S' %}
+                    <td>{{dados_consulta.horario_atividade}}</td>
+                    <td>{{dados_consulta.qtd_dias_atividade}}</td>
+                  {% endif %}
+
+  
+                    </tr>
+
+                
+          </table>
+            </div>
+          <br>
+          <div class="box" style="width: 1050px">
+            <p class="card-text" style="text-align: center;"> <strong>Dados da Consulta</strong></p>
+            <hr style="background-color: black;">
+            <p class="card-text" style="text-align: center;"> <strong>Resumo</strong></p>
+            
+            <p class="card-text">{{dados_consulta.resumo}}</p>
+            <hr style="background-color: black;">
+
+            <p class="card-text" style="text-align: center;"> <strong>Preferencia Alimentar</strong></p>
+            
+            <p class="card-text">{{dados_consulta.preferencia_alimentar}}</p>
+            <hr style="background-color: black;">
+          </div>
+            <button onclick="downloadPDF()" class="btn-custom-success">Gerar PDF</button>
+            <a href="{% url 'comprovante' consulta.codigo %}" class="btn-custom-info">Gerar comprovante</a>
+
+          </div>
+
+        </div>
+      </div>
+
+
+
+
+
+
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.1.392/pdf.min.mjs" type="módulo">
+        
+        </script>
+
+      <script src="{% static 'consultas/js/script.js' %}"></script>
+
+
+
+
+
+    
+{% endblock %}

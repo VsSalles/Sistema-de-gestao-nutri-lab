@@ -5,6 +5,8 @@ class Pacientes(models.Model):
     choices_sexo = (('F', 'Feminino'),
                     ('M', 'Maculino'))
     nome = models.CharField(max_length=50)
+    sobrenome = models.CharField(max_length=50, null=True, blank=True)
+    cpf = models.CharField(max_length=14, unique=True, blank=True, null=True)
     sexo = models.CharField(max_length=1, choices=choices_sexo)
     idade = models.IntegerField()
     email = models.EmailField()
@@ -19,6 +21,7 @@ class DadosPaciente(models.Model):
     data = models.DateTimeField()
     peso = models.IntegerField()
     altura = models.IntegerField()
+    taxa_metabolismo_basal = models.IntegerField(blank=True, null=True)
     percentual_gordura = models.IntegerField()
     percentual_musculo = models.IntegerField()
     colesterol_hdl = models.IntegerField()
@@ -41,11 +44,19 @@ class Refeicao(models.Model):
     def __str__(self):
         return f'{self.titulo} {self.paciente.nome}' 
 
-
 class Opcao(models.Model):
     refeicao = models.ForeignKey(Refeicao, on_delete=models.CASCADE)
-    imagem = models.ImageField(upload_to="opcao")
+    imagem = models.ImageField(upload_to="opcao", null=True, blank=True)
     descricao = models.TextField()
 
     def __str__(self):
         return self.refeicao.titulo + ' ' + self.refeicao.paciente.nome
+
+class GeraDados(models.Model):
+    nutri = models.ForeignKey(User, on_delete=models.CASCADE)
+    limite = models.IntegerField(default=40)
+
+    def __str__(self):
+        return self.nutri.username
+
+    

@@ -41,3 +41,8 @@ def email_html(path_template: str, assunto: str, para: list, **kwargs) -> dict:
     email.attach_alternative(html_content, "text/html")
     email.send()
     return {'status': 1}
+
+
+
+    
+    

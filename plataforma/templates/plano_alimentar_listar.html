@@ -12,7 +12,51 @@
         {% endfor %}
     {% endif %}
     <br>
-	<h1 class="titulo">Escolha o paciente</h1>
+    <br>
+
+    <div class="box width80">     
+        <form method="GET" action="{% url 'plano_alimentar_filter' %}">
+        <div class="row">
+            <div class="col-md-2">
+              <span>Paciente</span>
+                <select class="form-control" id="paciente" name="paciente">
+                        {% for paciente in pacientes %}
+
+                        <option value="{{paciente.id}}">{{paciente}}</option>
+                        {% endfor %}
+                        <option value="todos" selected>Todos</option>
+
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <span>Nome:</span>
+                  <input type="text" placeholder="Nome..."  name="nome" class="form-control">
+              </div>
+            
+            <div class="col-md-2">
+                <span>E-mail</span>
+                <input type="text" class="form-control" name="email" placeholder="email...">
+            </div>
+
+            <div class="col-md-2">
+              <span>Idade</span>
+              <input type="number" class="form-control" name="idade" placeholder="Idade...">
+          </div>
+
+
+            <div class="col-md-2">
+                <input type="submit" class="btn btn-success" value="FILTRAR">
+                <br>
+            </div>
+
+        </div>
+    </form>
+    </div>
+    
+    <br>
+    <br>
+
     <div  class="row">
         {% for paciente in pacientes%}
             <div class="col-md-4">

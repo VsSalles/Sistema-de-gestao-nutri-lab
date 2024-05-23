@@ -1,0 +1,154 @@
+{% extends 'base_plataforma.html' %}
+
+{% load static %}
+
+{% block 'plataforma' %}
+
+    {% if messages %}
+        <br>
+        {% for message in messages %}
+            <div class="alert {{message.tags}}">
+                {{message}}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <br>
+    <br>
+    <div class="box width80">     
+        <form method="GET" action="{% url 'pacientes_filter' %}">
+        <div class="row">
+
+            <div class="col-md-2">
+              <span>Paciente</span>
+                <select class="form-control" id="paciente" name="paciente">
+                        {% for paciente in pacientes %}
+
+                        <option value="{{paciente.id}}">{{paciente}}</option>
+                        {% endfor %}
+                        <option value="todos" selected>Todos</option>
+                        
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <span>Nome:</span>
+                  <input type="text" placeholder="Nome..."  name="nome" class="form-control">
+              </div>
+
+            
+            <div class="col-md-2">
+                <span>E-mail</span>
+                <input type="text" class="form-control" name="email" placeholder="email...">
+            </div>
+
+            <div class="col-md-2">
+              <span>Idade</span>
+              <input type="number" class="form-control" name="idade" placeholder="Idade...">
+          </div>
+
+
+            <div class="col-md-2">
+                <input type="submit" class="btn btn-success" value="FILTRAR">
+                <br>
+                <a href="{% url 'pacientes' %}" class="btn btn-dark">VOLTAR</a>
+            </div>
+
+            <div class="col-md-2">
+                <button type="button" class="btn-lg btn-outline-info" data-toggle="modal" data-target="#modal">
+                    Novo paciente
+                    </button>
+            </div>
+        </div>
+    </form>
+    </div>
+
+
+    <br>
+    <br>
+        <div  class="row">
+            {% for x in pacientes%}
+                <div class="col-md-4">
+                    <a href="{% url 'dados_paciente' x.id %}" class="link-hover">
+                        <div class="card-paciente">
+                            <div class="foto-perfil">
+                                {% if x.sexo == 'M' %}    
+                                    <img src="{% static 'plataforma/img/perfil2.png' %}">
+                                {% else %}
+                                    <img src="{% static 'plataforma/img/perfil1.png' %}">
+                                {% endif%}    
+                            </div>
+                            <br>
+                            <p class="dados">nome: {{x.nome}}</p>
+                            <p class="dados">idade: {{x.idade}}</p>
+                            <p class="dados">email: {{x.email}}</p>
+                        </div>
+                    </a>
+                    <br>
+                </div>
+            {% endfor %}
+        </div>
+
+
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title titulo" id="exampleModalLabel">Cadastrar paciente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <form action="{% url 'pacientes' %}" method="POST">{% csrf_token %}
+
+
+                    <div class="row">
+
+                        <div class="col-md-3">
+                            <img src="{% static 'plataforma/img/perfil2.png' %}">
+                        </div>
+
+                        <div class="col-md-9">
+                            <label>Nome:</label>
+                            <input type="text" placeholder="Digite o nome do paciente..." class="form-control" name="nome">
+                            <br>
+                            <label>Sobrenome:</label>
+                            <input class="form-control" placeholder="Digite o sobrenome..." type="text" name="sobrenome">
+                        </div>
+
+                    </div>
+
+                    <br>
+                    <label>Sexo:</label>
+                    <select name="sexo" class="form-control">
+                        <option value="M">Masculino</option>
+                        <option value="F">Feminino</option>
+                    </select>
+
+                    <br>
+
+                    <label>Idade:</label>
+                    <input type="number" placeholder="0" class="form-control" name="idade">
+                    
+                    <br>
+                    
+                    <label>E-mail:</label>
+                    <input type="email" placeholder="exemple@email.com" class="form-control" name="email">   
+
+                    <br>
+                    
+                    <label>Telefone:</label>
+                    <input type="text" placeholder="+55 (00) 00000-0000" class="form-control" name="telefone">
+                    <br>
+                    <input type="submit" class="btn btn-success btn-lg" value="Registar">
+                
+                </form>
+
+
+            </div>
+        
+        </div>
+    </div>
+    </div>
+{% endblock%}

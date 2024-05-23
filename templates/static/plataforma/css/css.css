@@ -59,3 +59,46 @@
     }
 
 }
+
+body{
+    color: white;
+
+}
+
+.informacoes_basicas{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #27DB8F;
+    height: 100px;
+    margin-right: auto;
+    border: 1px solid transparent;
+
+    box-shadow: 5px 5px 5px gray;
+
+    border-image-slice: 1;
+    margin-left: 1%;
+    
+
+
+}
+
+.icone{
+    color: #ffebfe;
+    width: 40px;
+ 
+
+}
+
+
+
+.box {
+    padding:20px;
+    width: 46vw;
+    background: rgb(238, 238, 238);
+    box-shadow: 4px 4px 10px rgba(0,0,0,.3);
+}
+
+.width80{
+    width: 61vw; 
+ }
