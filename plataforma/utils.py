@@ -48,10 +48,6 @@ class Geradora:
         self.qtd_dados = qtd_dados
         self.limite = limite
 
-    def main(self):
-        ...
-
-
     @classmethod
     def gera_telefone(cls) -> str:
         digitos = ['9']

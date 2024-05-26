@@ -272,3 +272,87 @@ function edita_dados_paciente(){
   })
 
 }
+
+function edita_dados_refeicao(){
+    var id = document.getElementById('paciente').value;
+    var identificador = document.getElementById('identificador').value;
+    var url = 'http://127.0.0.1:8000/plano_alimentar/' + id + '?identificador=' + identificador
+    var titulo = document.getElementById('titulo');   
+    var horario = document.getElementById('horario');
+    var carboidratos = document.getElementById('carboidratos');
+    var gorduras = document.getElementById('gorduras');
+    var proteinas = document.getElementById('proteinas');
+   
+
+  fetch(url, {
+      method: 'get',
+  }).then(function(result){
+      return result.json()
+  }).then(function(data){
+    
+    console.log(data)
+    horario.value =  data['dados_refeicao']['horario']
+    titulo.value = data['dados_refeicao']['titulo']
+    gorduras.value = data['dados_refeicao']['gorduras']
+    proteinas.value = data['dados_refeicao']['proteinas']
+    carboidratos.value = data['dados_refeicao']['carboidratos']
+
+  })
+
+}
+
+function edita_dados_opcao(){
+    var id = document.getElementById('paciente').value;
+    var identificador = document.getElementById('identificador_op').value;
+    var url = 'http://127.0.0.1:8000/plano_alimentar/' + id + '?identificador_op=' + identificador
+    var descricao = document.getElementById('descricao');
+   
+
+  fetch(url, {
+      method: 'get',
+  }).then(function(result){
+      return result.json()
+  }).then(function(data){
+    
+    descricao.value = data['dados_opcao']['descricao']
+
+  })
+
+}
+
+
+function exibe_refeicao_editar(){
+    const form_refeicao = document.getElementById('form-refeicao_edit')
+    const form_opcao = document.getElementById('form-opcao_edit')
+
+    form_refeicao.style.display = "block"
+    form_opcao.style.display = "none"
+
+}
+
+function exibe_opcao_editar(){
+    const form_refeicao = document.getElementById('form-refeicao_edit')
+    const form_opcao = document.getElementById('form-opcao_edit')
+
+    form_refeicao.style.display = "none"
+    form_opcao.style.display = "block"
+
+}
+
+function exibe_refeicao_excluir(){
+    const form_refeicao = document.getElementById('form-refeicao_excluir')
+    const form_opcao = document.getElementById('form-opcao_excluir')
+
+    form_refeicao.style.display = "block"
+    form_opcao.style.display = "none"
+
+}
+
+function exibe_opcao_excluir(){
+    const form_refeicao = document.getElementById('form-refeicao_excluir')
+    const form_opcao = document.getElementById('form-opcao_excluir')
+
+    form_refeicao.style.display = "none"
+    form_opcao.style.display = "block"
+
+}

@@ -48,6 +48,7 @@ def valida_campo_branco(*args):
         return True
     
 def gera_comprovante(nome: str, sobrenome: str,  cpf: str, data_consulta: dict, periodo:str, local: str, token: str, nutri: str, data_emissao: dict):
+    #em desenvolvimento
     nome_completo = nome + sobrenome
     caminho_projeto = Path(__file__).parent.parent
     caminho_img = caminho_projeto / 'templates/static/consultas/img/comprovante.png'

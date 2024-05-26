@@ -191,7 +191,7 @@
                                   {% if consulta.status == 'C' or consulta.status == 'F' %}
                                   <button class="btn btn-danger" disabled>Cancelar</button>
                                   {% else %}
-                                  <button class="btn btn-danger">Cancelar</button>
+                                  <a href="{% url 'cancelar' consulta.codigo %}" class="btn btn-danger">Cancelar</a>
                                   {% endif %}
                                 </td>
 

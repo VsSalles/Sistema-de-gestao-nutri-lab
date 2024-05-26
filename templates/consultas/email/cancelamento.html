@@ -13,8 +13,10 @@
         Emergencial do doutor(a).
     {% elif cancelamento.motivo == 'I' %}
         Imprevisto
-    {%else%}
-        Outro  {{ - cancelamento.detalhes}}
+    {% elif cancelamento.detalhes %}
+        {{cancelamento.detalhes}}
+    {% else %}
+        Outro     
     {% endif %}
 
 

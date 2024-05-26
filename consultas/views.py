@@ -15,8 +15,8 @@ def home(request):
     if request.method == 'GET':
         if request.GET.get('user'):
             user = request.GET.get('user')
-            pacientes = Pacientes.objects.filter(id=user).filter()
-            return render(request, 'consultas/consultas.html', {'pacientes': pacientes})
+            pacientes = Pacientes.objects.filter(id=user)
+            return render(request, 'consultas/consultas.html', {'pacientes': pacientes, 'one': '1'})
         pacientes = Pacientes.objects.filter(nutri=request.user)
         return render(request, 'consultas/consultas.html', {'pacientes': pacientes})
     elif request.method == 'POST':
@@ -167,7 +167,7 @@ def realizar(request, pedido):
         try:
             dados_consulta = DadosConsulta.objects.create(consulta=consulta, resumo=resumo,objetivo=objetivo, preferencia_alimentar=preferencia_alimentar, 
                                                       horario_fome=horario_fome, horas_sono=horas_sono, tabagismo=tabagismo, 
-                                                      frequencia_tabagismo=frequencia_tabagismo, atividade=atividade, atividade_fisica=atividade_fisica,
+                                                      frequencia_tabagismo=frequencia_tabagismo, atividade_fisica=atividade, atividade=atividade_fisica,
                                                       horario_atividade=horario_atividade, qtd_dias_atividade=qtd_dias_atividade,
                                                       )
             dados_consulta.save()

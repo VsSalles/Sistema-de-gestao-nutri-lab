@@ -38,16 +38,20 @@
 
     <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#modal4">Editar dados de saude do paciente</button>
 
-    <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal1">
+    <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#modal1">
         Editar dados cadastrais do paciente
     </button>
 
-    <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal2">
+    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modal2">
         Excluir paciente
     </button>
 
     <a href="http://127.0.0.1:8000/consultas/?user={{paciente.id}}"  class="btn btn-outline-warning" data-target="#modal3">
         Marcar consulta 
+    </a>
+    
+    <a style="margin-top: 15px;" href="{% url 'plano_alimentar' paciente.id %}"  class="btn btn-outline-primary" data-target="#modal3">
+        Plano alimentar 
     </a>
 
     <br>
@@ -67,8 +71,8 @@
         <tbody>
             <tr>
                 {% for dado in dados_paciente %}
-                    <th scope="row">{{dado.peso}}</th>
-                    <td>{{dado.altura}}</td>
+                    <th scope="row">{{dado.peso}}KG</th>
+                    <td>{{dado.altura}}CM</td>
                     <td>{{dado.percentual_gordura}}</td>
                     <td>{{dado.percentual_musculo}}</td>
                     <td>{{dado.taxa_metabolismo_basal}}</td>
@@ -372,7 +376,7 @@
                 </div>
                 
                 <div class="modal-body">
-                    <form action="{% url 'dados_paciente' paciente.id %}" method="POST">{% csrf_token %}
+                    <form action="{% url 'atualiza_dados_paciente' paciente.id %}" method="POST">{% csrf_token %}
                         <h4 class="titulo">Dados do paciente</h4>
                         <div class="form-row">
                             <div class="col-md">

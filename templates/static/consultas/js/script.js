@@ -45,3 +45,7 @@ function downloadPDF() {
 
 } 
 
+function btn_consulta(){
+  var botao = document.getElementById('btn-consulta')
+        botao.click();
+}

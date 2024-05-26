@@ -22,7 +22,7 @@
           <div class="card-body">
             <h4 class="card-title">Nova Consulta</h4>
             <p class="card-text">Agendar nova consulta</p>
-            <button type="button" data-target="#modal1" data-toggle="modal" class="btn btn-success">Agendar</button>
+            <button id="btn-consulta" type="button" data-target="#modal1" data-toggle="modal" class="btn btn-success">Agendar</button>
           </div>
         </div>
         <div class="card">
@@ -35,7 +35,7 @@
         </div>
       </div>
 
-
+      
       <!--modal nova consulta-->
       <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="modal1">
         <div class="modal-dialog" role="document">
@@ -69,9 +69,6 @@
                             <input type="submit" class="btn btn-success" value="Agendar"></button>
                         </div>
                       </form>
-
-                      <script src="{% static 'consultas/js/script.js' %}"></script>
-
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -80,9 +77,16 @@
         </div>
       </div>
      <!--endmodal-->
+     <script src="{% static 'consultas/js/script.js'%}"></script>
 
+     {% if one == '1' %}
+     <script>
+        window.onload = function(){
+          btn_consulta()
+        }
+     </script>
 
-
+     {% endif %}
 
 
 {% endblock %}

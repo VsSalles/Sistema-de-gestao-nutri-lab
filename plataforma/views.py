@@ -136,19 +136,19 @@ def dados_paciente(request, id):
         if not int(peso) and int(altura) and int(gordura) and int(musculo) and int(hdl) and int(ldl) and int(colesterol_total) and int(triglicerídios):
             messages.add_message(request, messages.WARNING, 'Todos os dados são numericos!')
             return redirect(f'/dados_paciente/{paciente.id}')
-        if peso > 500:
+        if int(peso) > 500:
             messages.add_message(request, messages.WARNING, 'Peso não pode ser maior que 500kg!')
             return redirect(f'/dados_paciente/{paciente.id}')
         
-        if altura > 300:
+        if int(altura) > 300:
             messages.add_message(request, messages.WARNING, 'Altura não pode ser maior que 300cm ou 3m!')
             return redirect(f'/dados_paciente/{paciente.id}')
         
-        if gordura > 100:
+        if int(gordura) > 100:
             messages.add_message(request, messages.WARNING, 'Gordura não pode ser maior que 100%!')
             return redirect(f'/dados_paciente/{paciente.id}')
         
-        if musculo > 100:
+        if int(musculo) > 100:
             messages.add_message(request, messages.WARNING, 'Musculo não pode ser maior que 100%!')
             return redirect(f'/dados_paciente/{paciente.id}')
 
@@ -235,13 +235,13 @@ def atualiza_dados_paciente(request, id):
     taxa = basal(p1)
     
     try: 
-        dados_paciente.peso = peso
-        dados_paciente.altura = altura
-        dados_paciente.percentual_musculo = musculo
-        dados_paciente.percentual_gordura = gordura
-        dados_paciente.colesterol_hdl = hdl
-        dados_paciente.colesterol_ldl = ldl 
-        dados_paciente.trigliceridios = triglicerídios
+        dados_paciente.peso = int(peso)
+        dados_paciente.altura = int(altura)
+        dados_paciente.percentual_musculo = int(musculo)
+        dados_paciente.percentual_gordura = int(gordura)
+        dados_paciente.colesterol_hdl = int(hdl)
+        dados_paciente.colesterol_ldl = int(ldl) 
+        dados_paciente.trigliceridios = int(triglicerídios)
         dados_paciente.save()     
         messages.add_message(request, messages.SUCCESS, 'Dados atualizados com sucesso!')
         return redirect(f'/dados_paciente/{paciente.id}')
@@ -250,7 +250,6 @@ def atualiza_dados_paciente(request, id):
         messages.add_message(request, messages.ERROR, 'Erro interno do sistema!')
         return redirect(f'/dados_paciente/{paciente.id}')
         
-
 @login_required(login_url='/auth/login/')        
 def pacientes_editar(request, id):
     try:
@@ -362,8 +361,36 @@ def plano_alimentar(request, id):
         return redirect('/dados_paciente/')
 
     if request.method == "GET":
+        if request.GET.get('identificador'):
+            identificador = request.GET.get('identificador')
+            refeicao = Refeicao.objects.filter(id=identificador).first()
+
+            json = {
+                'titulo': refeicao.titulo,
+                'horario': refeicao.horario,
+                'carboidratos': refeicao.carboidratos,
+                'proteinas': refeicao.proteinas,
+                'gorduras': refeicao.gorduras,
+
+            }
+            return JsonResponse({'dados_refeicao': json})
+        
+        elif request.GET.get('identificador_op'):
+            identificador_op = request.GET.get('identificador_op')
+            opcao = Opcao.objects.filter(id=identificador_op).first()
+
+            json = {
+                'descricao': opcao.descricao              
+            }
+            return JsonResponse({'dados_opcao': json})
+        
         r1 = Refeicao.objects.filter(paciente=paciente).order_by('horario')
-        opcao = Opcao.objects.all()
+        opcaoes = Opcao.objects.all()
+        opcao = []
+        for op in opcaoes:
+            if op.refeicao.paciente == paciente:
+                opcao.append(op)
+            
         return render(request, 'plano_alimentar.html', {'paciente': paciente, 'refeicao': r1, 'opcao': opcao})
 
 @login_required(login_url='/auth/login/')        
@@ -422,6 +449,105 @@ def opcao(request, id_paciente):
         except Exception as e:
             print(e)
             return redirect('plano_alimentar', id_paciente)
+
+@login_required(login_url='/auth/login/')        
+def edita_refeicao(request, id_paciente):
+     paciente = get_object_or_404(Pacientes, id=id_paciente)
+     if not paciente.nutri == request.user:
+        messages.add_message(request, messages.ERROR, 'Esse paciente não é seu')
+        return redirect('/dados_paciente/')
+
+     if request.method == "POST":
+        identificador = request.POST.get('identificador')
+        titulo = request.POST.get('titulo')
+        horario = request.POST.get('horario')
+        carboidratos = request.POST.get('carboidratos')
+        proteinas = request.POST.get('proteinas')
+        gorduras = request.POST.get('gorduras')
+
+        refeicao = get_object_or_404(Refeicao, id=identificador)
+
+        try:
+            refeicao.titulo = titulo
+            refeicao.horario = horario
+            refeicao.carboidratos = carboidratos
+            refeicao.proteinas = proteinas
+            refeicao.gorduras = gorduras
+            refeicao.save()
+            messages.add_message(request, messages.SUCCESS, 'Refeição atualizada com sucesso!')
+            return redirect(f'/plano_alimentar/{id_paciente}')
+        except Exception as e:
+            print(e)
+            messages.add_message(request, messages.ERROR, 'Erro interno do sistema')
+            return redirect(f'/plano_alimentar/{id_paciente}')
+
+@login_required(login_url='/auth/login/')        
+def edita_opcao(request, id_paciente):
+     paciente = get_object_or_404(Pacientes, id=id_paciente)
+     if not paciente.nutri == request.user:
+        messages.add_message(request, messages.ERROR, 'Esse paciente não é seu')
+        return redirect('/dados_paciente/')
+
+     if request.method == "POST":
+        identificador = request.POST.get('opcao')
+        imagem = request.POST.get('imagem')
+        descricao = request.POST.get('descricao')
+
+        opcao = get_object_or_404(Opcao, id=identificador)
+
+        try:
+            if imagem:
+                opcao.imagem = imagem
+            opcao.descricao = descricao
+            opcao.save()
+            messages.add_message(request, messages.SUCCESS, 'Opção atualizada com sucesso!')
+            return redirect(f'/plano_alimentar/{id_paciente}')
+        except Exception as e:
+            print(e)
+            messages.add_message(request, messages.ERROR, 'Erro interno do sistema')
+            return redirect(f'/plano_alimentar/{id_paciente}')
+
+@login_required(login_url='/auth/login/')   
+def exclui_refeicao(request, id_paciente):
+    paciente = get_object_or_404(Pacientes, id=id_paciente)
+    if not paciente.nutri == request.user:
+        messages.add_message(request, messages.ERROR, 'Esse paciente não é seu')
+        return redirect('/dados_paciente/')
+
+    if request.method == "POST":
+        identificador = request.POST.get('identificador')
+
+        refeicao = get_object_or_404(Refeicao, id=identificador)
+
+        try:
+            refeicao.delete()
+            messages.add_message(request, messages.INFO, 'Refeição excluida com sucesso!')
+            return redirect(f'/plano_alimentar/{id_paciente}')
+        except Exception as e:
+            print(e)
+            messages.add_message(request, messages.ERROR, 'Erro interno do sistema')
+            return redirect(f'/plano_alimentar/{id_paciente}')
+
+@login_required(login_url='/auth/login/')   
+def exclui_opcao(request, id_paciente):
+    paciente = get_object_or_404(Pacientes, id=id_paciente)
+    if not paciente.nutri == request.user:
+        messages.add_message(request, messages.ERROR, 'Esse paciente não é seu')
+        return redirect('/dados_paciente/')
+
+    if request.method == "POST":
+        identificador = request.POST.get('opcao')
+
+        opcao = get_object_or_404(Opcao, id=identificador)
+
+        try:
+            opcao.delete()
+            messages.add_message(request, messages.INFO, 'Opção excluida com sucesso!')
+            return redirect(f'/plano_alimentar/{id_paciente}')
+        except Exception as e:
+            print(e)
+            messages.add_message(request, messages.ERROR, 'Erro interno do sistema')
+            return redirect(f'/plano_alimentar/{id_paciente}')
 
 @login_required(login_url='/auth/login/')        
 def dashboard(request):
