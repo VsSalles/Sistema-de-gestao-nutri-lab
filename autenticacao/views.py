@@ -121,7 +121,4 @@ def recrutador(request):
         auth.login(request, usuario)
         return redirect('/')
     else:
-        print(senha)
-        print(user)
-        print(email)
         return redirect('/auth/login/')
